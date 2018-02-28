@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery.js"></script>
+</head>
+<body>
+<div id="btn">显示</div>
+<div id="div"></div>
+</body>
+<script>
+    $("#btn").click(function(){
+        $.ajax({
+            url:"http://127.0.0.1:3000/Handler/todos?action=show",
+            type:"get",
+            async:true,
+            dataType: "jsonp",
+            jsonpCallback:'cb',
+        }).done(function(result){
+            $("#div").html(result)
+            console.log(result)
+        })
+    })
+</script>
+</html>

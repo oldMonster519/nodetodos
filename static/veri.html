@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery.js"></script>
+</head>
+<body>
+<div style="width: 50px;height: 50px;background: red" id="div"></div>
+<input type="text" placeholder="请输入验证码" id="btn">
+    用户名:<input type="text" name="username" id="name">
+    <input type="submit"  id="btn1">
+    注册用户名:<input type="text"  id="regi">
+    <input value="注册" style="background: red" id="btn2">
+<div>
+    注册用户名:<input type="text"  id="divreg">
+    注册密码:<input type="text"  id="mima">
+    <input value="注册" style="background: red" id="btn3">
+</div>
+
+
+
+
+
+<script>
+    $(function(){
+        $("#btn").click(function(){
+            $.ajax({
+                url:"http://127.0.0.1:3000/Handler/AdminLoginHandler?action=var1",
+                type:"get",
+                async:true,
+                dataType: "jsonp",
+                jsonpCallback:'cb',
+            }).done(function(result){
+                $("#div").html(result)
+            })
+        })
+        $("#btn1").click(function(){
+            if ($("#btn").val().toLowerCase()== $("#div").html().toLowerCase()){
+                $.ajax({
+                    url:"http://127.0.0.1:3000/Handler/AdminLoginHandler?action=login",
+                    type:"get",
+                    async:true,
+                    dataType: "jsonp",
+                    jsonpCallback:'cc',
+                }).done(function(result){
+                    if($("#name").val()==result.name){
+                        alert("状态login为"+result.login)
+                        alert("账号无误,恭喜你登录成功")
+                    }else{
+                        alert("没有此用户名")
+                    }
+                })
+
+            }else{
+                alert("验证码输错了")
+            }
+
+
+        })
+
+        $("#btn2").click(function(){
+            var users={user:$("#regi").val()}
+            $.ajax({
+                url:"http://127.0.0.1:3000/Handler/AdminLoginHandler?action=reg",
+                type:"POST",
+                data:users,
+                async:true,
+                dataType: "jsonp"
+            }).done(function(data){
+               alert("ok!!")
+            })
+
+
+        })
+
+
+        $("#btn3").click(function(){
+            var user={name:$("#divreg").val(),password:$("#mima").val()}
+            $.ajax({
+                url:"http://127.0.0.1:3000/Handler/AdminRegHandler?address=reg",
+                type:"POST",
+                data:user,
+                async:true,
+                dataType: "jsonp"
+            }).done(function(data){
+                alert("ok!!")
+            })
+
+
+        })
+    })
+</script>
+</body>
+</html>

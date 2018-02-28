@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #div p{
+            line-height: 50px;
+            font-size: 25px;
+            width: auto;
+            border: 1px solid red;
+        }
+        #div span{
+            text-align: center;
+            display: inline-block;
+            width: 150px;
+            background:yellow;
+            font-size: 25px;
+            font-weight: bold;
+        }
+        #div .sp1{
+            width:auto;
+            padding: 0 15px;
+            background: lightgoldenrodyellow;
+        }
+        #div .sp2{
+            width: 100px;
+        }
+        #div i{
+            display: inline-block;
+            margin-left: 200px;
+        }
+        .box{
+            display: none;
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            width: 260px;
+            height: 200px;
+            z-index: 20;
+            background: rgba(20,20,60,.5);
+            color: red;
+            text-align: center;
+        }
+
+    </style>
+    <script src="jquery.js"></script>
+</head>
+<body>
+<button id="btn">获取下一页信息</button><button id="nextbtn">下一页</button>
+<input id="text" placeholder="请输入查询信息">
+<div id="div">
+</div>
+<div class="box">
+    <!--编辑和删除-->
+    <form action="http://127.0.0.1:3000/Handler/AdminHandler?action=update" method="post">
+        用户名:<input type="text" id="onlyname" readonly="readonly" name="user"><br>
+        手机号:<input type="text" name="phone"><br>
+        <input type="submit">
+    </form>
+</div>
+</body>
+<script>
+    $(function(){
+        var k=0;
+        $("#btn").click(function(){
+            $("#div").empty();
+            k++;
+            $.ajax({
+                url:"http://127.0.0.1:3000/Handler/Adminshowlist?action=show&&pagestart="+k+"&&text="+$("#text").val()+"",
+                type:"get",
+                async:true,
+                dataType: "jsonp",
+                jsonpCallback:'cbreturn',
+            }).done(function(data){
+                var  result=data.data.list;
+                for(var key in result){
+                        $("<p><span class='tokenid'>"+result[key].tokenId+"</span><span class='sp1'>"+result[key]._id+"</span><span class='sp1'>"+result[key].tokenId+"</span><span class='sp1 sp2'>"+result[key].name+"</span><span class='sp1'>"+result[key].phone+"</span><i>编辑</i>------<em>删除</em></p>").appendTo($("#div"))
+                }
+//               $("#nextbtn").click(function(){
+//                   $("#div").empty();
+//                    n+=3;
+//                    m+=3;
+//                   console.log(n);
+//                   for(var key in result){
+//                       if (key<n&&key>=m){
+//                           $("<p><span>"+key+"</span><span class='sp1'>"+result[key]._id+"</span><span class='sp1'>"+result[key].tokenId+"</span><span class='sp1 sp2'>"+result[key].name+"</span><span class='sp1'>"+result[key].phone+"</span></p>").appendTo($("#div"))
+//                       }
+//
+//                       console.log(key,result[key])
+//                   }
+//               })
+            })
+        })
+        $("#div i").live("click",function(){
+            $(".box").fadeIn();
+            $("#onlyname").val($(this).siblings(".sp2").text())
+            console.log($(this).siblings(".sp2").text());
+        })
+        $("#div em").live("click",function(){
+            var tokenid=$(this).siblings(".tokenid").text();
+            console.log(tokenid);
+            $.ajax({
+                url:"http://127.0.0.1:3000/Handler/AdminDelHandler?action=remove&&id="+tokenid,
+                type:"get",
+                async:true,
+                dataType: "json",
+            }).done(function(data){
+
+            })
+
+
+        })
+    })
+
+</script>
+</html>

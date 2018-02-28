@@ -1,0 +1,13 @@
+在  package.json  里面  配置启动命令
+在script 里面  如果是 start 命令的话  npm start
+               如果是 其他命令的话    npm run 名称
+
+
+               解决跨域：
+               jsonp    不支持post请求
+               cors
+               window.loaction domain
+               cnd      托管
+校验验证码:
+1.和原有已经获取打的验证码进行对比
+2.在获取时把验证码存储下来   cookie session  flash

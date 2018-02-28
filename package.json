@@ -1,0 +1,26 @@
+{
+  "name": "cms",
+  "version": "1.0.0",
+  "description": "在  package.json  里面  配置启动命令\r 在script 里面  如果是 start 命令的话  npm start\r                如果是 其他命令的话    npm run 名称",
+  "main": "app.js",
+  "bin": {
+    "cms": "www.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "mongodb": "^2.2.33",
+    "morgan": "^1.9.0",
+    "express-router": "^0.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node ./bin/www.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
